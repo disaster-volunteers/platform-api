@@ -15,10 +15,11 @@ import {DisasterController} from "./controller/disaster.controller";
     imports: [
         TypeOrmModule.forFeature([
             Disaster, DisasterRepository,
-            DisasterType, DisasterTypeRepository
+            DisasterType, DisasterTypeRepository,
+            User, UserRepository
         ])
     ],
-    providers: [DisasterService],
+    providers: [DisasterService, UserService],
     controllers: [DisasterController],
 })
 export class DisastersModule {}

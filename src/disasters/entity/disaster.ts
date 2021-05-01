@@ -8,9 +8,12 @@ export class Disaster {
     public id: number;
 
     @Column()
+    public dateStarted: Date;
+
+    @Column()
     public coordinates: string;
 
-    @ManyToOne(typeEntity => DisasterType, type => type.disaster)
+    @ManyToOne(typeEntity => DisasterType, type => type.disaster, {eager: true})
     public type: DisasterType;
 
     @Column()
@@ -19,6 +22,18 @@ export class Disaster {
     @Column()
     public description: string;
 
-    @ManyToMany(type => User, user => user.attendedDisasters)
+    @Column()
+    public essentials: string;
+
+    @Column()
+    public finalMessage: string;
+
+    @Column()
+    public dateResolved: Date;
+
+    @Column()
+    public outerHelp: number = 0;
+
+    @ManyToMany(type => User, user => user.attendedDisasters, {eager: true})
     public volunteers: User[]
 }
