@@ -7,6 +7,8 @@ import {UserAlreadyExistsError} from "../error/user-already-exists.error";
 import {PasswordsMismatchError} from "../error/passwords-mismatch.error";
 import {UserResponse} from "../payload/user.response";
 import {Injectable} from "@nestjs/common";
+import {ProfileRequest} from "../payload/profile.request";
+import {AuthResponse} from "../../auth/payload/auth.response";
 
 @Injectable()
 export class UserService {
@@ -31,7 +33,28 @@ export class UserService {
 
         await this.userRepository.save(user);
 
-        return new UserResponse(user.username, user.name, user.available);
+        return UserResponse.fromUser(user);
+    }
+    
+    async profile(id: number): Promise<UserResponse> {
+        return UserResponse.fromUser(await this.userRepository.findOne(id));
+    }
+
+    async edit(principal: AuthResponse, model: ProfileRequest): Promise<UserResponse> {
+        let user = await this.userRepository.findOne(principal.id);
+
+        user.name = model.name;
+        user.description = model.description;
+
+        return UserResponse.fromUser(await this.userRepository.save(user));
+    }
+
+    async availability(principal: AuthResponse): Promise<UserResponse> {
+        let user = await this.userRepository.findOne(principal.id);
+
+        user.available = !user.available;
+
+        return UserResponse.fromUser(await this.userRepository.save(user));
     }
 
     async findByUsername(username: string): Promise<User> {

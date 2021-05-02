@@ -16,6 +16,9 @@ export class User {
     public name: string;
 
     @Column()
+    public description: string;
+
+    @Column()
     public available: boolean = false;
 
     @Column()

@@ -17,7 +17,7 @@ export class AuthService {
     async validateUser(username: string, password: string): Promise<AuthResponse> {
         const user = await this.userService.findByUsername(username);
         if (user && bcrypt.compareSync(password, user.password)) {
-            return new AuthResponse(user.id, user.username, user.name, user.available);
+            return new AuthResponse(user.id, user.username, user.name);
         }
 
         return null;
@@ -33,8 +33,7 @@ export class AuthService {
             this.jwtService.sign({
                 id: user.id,
                 username: user.username,
-                name: user.name,
-                available: user.available
+                name: user.name
             })
         );
     }
