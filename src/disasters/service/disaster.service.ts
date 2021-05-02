@@ -11,6 +11,7 @@ import {AuthResponse} from "../../auth/payload/auth.response";
 import {UserService} from "../../users/service/user.service";
 import {EssentialsRequest} from "../payload/essentials.request";
 import {FinalMessageRequest} from "../payload/final-message.request";
+import {DisasterTypeResponse} from "../payload/disaster-type.response";
 
 export class DisasterService {
     constructor(
@@ -35,6 +36,10 @@ export class DisasterService {
 
     async single(id: number): Promise<DisasterResponse> {
         return DisasterResponse.fromDisaster(await this.disasterRepository.findOne(id));
+    }
+
+    async types(): Promise<DisasterTypeResponse[]> {
+        return (await this.disasterTypeRepository.find()).map(dt => new DisasterTypeResponse(dt.id, dt.name, dt.iconUrl));
     }
 
     async create(model: DisasterRequest): Promise<DisasterResponse> {

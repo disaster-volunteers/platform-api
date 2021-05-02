@@ -5,6 +5,7 @@ import {UserService} from "../../users/service/user.service";
 import {AuthService} from "../service/auth.service";
 import {AuthRequest} from "../payload/auth.request";
 import {TokenResponse} from "../payload/token.response";
+import {Public} from "../decorator/auth.decorator";
 
 @Controller("/auth")
 export class AuthController {
@@ -15,6 +16,7 @@ export class AuthController {
     }
 
     @Post()
+    @Public()
     async login(@Body() authModel: AuthRequest): Promise<TokenResponse> {
         return this.authService.login(authModel);
     }

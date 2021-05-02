@@ -5,6 +5,8 @@ import {DisasterResponse} from "../payload/disaster.response";
 import {AuthPrincipal, Public} from "../../auth/decorator/auth.decorator";
 import {EssentialsRequest} from "../payload/essentials.request";
 import {FinalMessageRequest} from "../payload/final-message.request";
+import {DisasterType} from "../entity/disaster-type";
+import {DisasterTypeResponse} from "../payload/disaster-type.response";
 
 @Controller("/disasters")
 export class DisasterController {
@@ -23,6 +25,12 @@ export class DisasterController {
         @Query("userId") userId
     ): Promise<DisasterResponse[]> {
         return this.disasterService.all();
+    }
+
+    @Get("/types")
+    @Public()
+    async types(): Promise<DisasterTypeResponse[]> {
+        return this.disasterService.types();
     }
 
     @Get("/:id")

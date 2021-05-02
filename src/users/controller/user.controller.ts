@@ -1,6 +1,4 @@
 import {Body, Controller, Get, Param, Patch, Post} from "@nestjs/common";
-
-import {User} from "../entity/User";
 import {UserService} from "../service/user.service";
 import {UserRequest} from "../payload/user.request";
 import {UserResponse} from "../payload/user.response";

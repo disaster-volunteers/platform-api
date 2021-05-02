@@ -12,6 +12,6 @@ export class DisasterType {
     @Column()
     public iconUrl: string;
 
-    @OneToMany(type => Disaster, disaster => disaster.type)
+    @OneToMany(type => Disaster, disaster => disaster.type, {eager: false})
     public disaster: Disaster
 }

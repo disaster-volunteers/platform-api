@@ -30,7 +30,7 @@ export class DisasterResponse {
             disaster.essentials,
             disaster.finalMessage,
             disaster.dateResolved,
-            disaster.volunteers ? disaster.volunteers.map(v => new UserResponse(v.username, v.name, v.available)) : [],
+            disaster.volunteers ? disaster.volunteers.map(v => new UserResponse(v.id, v.username, v.name, v.description, v.available)) : [],
             disaster.outerHelp
         )
     }
