@@ -1,39 +1,49 @@
-import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {DisasterType} from "./disaster-type";
-import {User} from "../../users/entity/user";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { DisasterType } from './disaster-type';
+import { User } from '../../users/entity/user';
 
 @Entity()
 export class Disaster {
-    @PrimaryGeneratedColumn()
-    public id: number;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
-    @Column()
-    public dateStarted: Date;
+  @Column()
+  public dateStarted: Date;
 
-    @Column()
-    public coordinates: string;
+  @Column()
+  public coordinates: string;
 
-    @ManyToOne(typeEntity => DisasterType, type => type.disaster, {eager: true})
-    public type: DisasterType;
+  @ManyToOne(() => DisasterType, (type) => type.disaster, {
+    eager: true,
+  })
+  public type: DisasterType;
 
-    @Column()
-    public resolved: boolean = false;
+  @Column({ nullable: false, default: false })
+  public resolved: boolean;
 
-    @Column()
-    public description: string;
+  @Column()
+  public description: string;
 
-    @Column()
-    public essentials: string;
+  @Column({ nullable: true })
+  public essentials: string;
 
-    @Column()
-    public finalMessage: string;
+  @Column({ nullable: true })
+  public finalMessage: string;
 
-    @Column()
-    public dateResolved: Date;
+  @Column({ nullable: true })
+  public dateResolved: Date;
 
-    @Column()
-    public outerHelp: number = 0;
+  @Column({ nullable: false, default: 0 })
+  public outerHelp: number;
 
-    @ManyToMany(type => User, user => user.attendedDisasters, {eager: true})
-    public volunteers: User[]
+  @ManyToMany((type) => User, (user) => user.attendedDisasters, { eager: true })
+  public volunteers: User[];
 }
